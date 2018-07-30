@@ -31,6 +31,7 @@ firebase.firestore();
 // react-redux-firebase config
 const rrfConfig = {
   userProfile: 'users',
+  attachAuthIsReady: true,
   useFirestoreForProfile: true,
   enableLogging: true
 };
@@ -39,6 +40,10 @@ const rrfConfig = {
 const createStoreWithFirebase = compose(reactReduxFirebase(firebase, rrfConfig), reduxFirestore(firebase))(createStore);
 const store = createStoreWithFirebase(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
+
+store.firebaseAuthIsReady.then(() => {
+  console.error('authorized');
+});
 
 ReactDOM.render(<Provider store={store}><App/></Provider>, document.getElementById('root'));
 registerServiceWorker();
